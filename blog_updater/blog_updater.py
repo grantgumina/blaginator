@@ -1,13 +1,20 @@
-import os.path, time, glob
+import os.path, time, glob, operator
+from collections import OrderedDict
 
 header = '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <meta charset="utf-8">    <link rel="shortcut icon" href="favicon.ico">    <title>Grant Gumina | Homepage</title>    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="description" content="">    <meta name="author" content="">    <!-- Le styles -->    <link rel="stylesheet" type="text/css" href="http://grantgumina.com/css/metro-bootstrap.css">    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->    <!--[if lt IE 9]>      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>    <![endif]-->    <!-- Le fav and touch icons -->    <link rel="shortcut icon" href="http://localhost:49558/assets/ico/favicon.ico">    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:49558/assets/ico/apple-touch-icon-144-precomposed.png">    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:49558/assets/ico/apple-touch-icon-114-precomposed.png">    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:49558/assets/ico/apple-touch-icon-72-precomposed.png">    <link rel="apple-touch-icon-precomposed" href="http://localhost:49558/assets/ico/apple-touch-icon-57-precomposed.png">    <!-- Navbar    ================================================== -->   <div class="navbar navbar-static-top">        <div class="navbar-inner">            <div class="container">                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>                </a><a class="brand" href="http://grantgumina.com/"><img src="http://grantgumina.com/img/logo.png"></a>                <div class="nav-collapse collapse">                    <ul class="nav" style="margin-top: 20px;">                        <li class=""><a href="http://grantgumina.com/about.html">about</a> </li>                        <li class=""><a href="http://grantgumina.com/work.html">work</a> </li>                        <li class=""><a href="http://grantgumina.com/thoughts">thoughts</a> </li>                        <li class=""><a href="http://grantgumina.com/contact.html">contact</a></li>                    </ul>                </div>            </div>        </div>    </div>    <div class="container" style="margin-top:20px;">        <div class="hero-unit">'
 footer = '</div></div><!-- Placed at the end of the document so the pages load faster --><script type="text/javascript" src="docs/jquery-1.8.0.js"></script><script type="text/javascript" src="docs/bootstrap-tooltip.js"></script><script type="text/javascript" src="docs/bootstrap-alert.js"></script><script type="text/javascript" src="docs/bootstrap-button.js"></script><script type="text/javascript" src="docs/bootstrap-carousel.js"></script><script type="text/javascript" src="docs/bootstrap-collapse.js"></script><script type="text/javascript" src="docs/bootstrap-dropdown.js"></script><script type="text/javascript" src="docs/bootstrap-modal.js"></script><script type="text/javascript" src="docs/bootstrap-popover.js"></script><script type="text/javascript" src="docs/bootstrap-scrollspy.js"></script><script type="text/javascript" src="docs/bootstrap-tab.js"></script><script type="text/javascript" src="docs/bootstrap-transition.js"></script><script type="text/javascript" src="docs/bootstrap-typeahead.js"></script><script type="text/javascript" src="docs/jquery.validate.js"></script><script type="text/javascript" src="docs/jquery.validate.unobtrusive.js"></script><script type="text/javascript" src="docs/jquery.unobtrusive-ajax.js"></script></body></html>'
 toc_body = ''
-toc_titles = {}
-# iterate through all unpublished HTML files
+toc_titles = OrderedDict()
+toc_files_time_created = OrderedDict()
+toc_files_time_updated = OrderedDict()
+
+# iterate through all unpublished HTML files and sort by date created (thus most recent posts are listed at the top)
 path = './unpublished'
-for infile in glob.glob(os.path.join(path, '*.html')):
-    html_post = infile
+files = glob.glob(os.path.join(path, '*.html'))
+files.sort(key=lambda x: os.path.getmtime(x))
+for infile in files:
+    # parsing out the bullshit
+    html_post_file = infile
     infile = infile.split('\\')
     infile = infile[1]
     filename = infile
@@ -15,7 +22,8 @@ for infile in glob.glob(os.path.join(path, '*.html')):
     infile = infile[0]
     words = infile.split("-")
     title = ''
-
+    
+    # get the document's title based on the filename where '-' denotes a space in the title name
     ct = 0
     for w in words:
         if (ct == 0):
@@ -24,12 +32,16 @@ for infile in glob.glob(os.path.join(path, '*.html')):
             title = title + ' ' + w
         ct += 1
     toc_titles[title] = filename
-    print 'Publishing: ' + title + ' -- ' + html_post
+    #print toc_titles[title]
+    
+    toc_files_time_created[title] = time.ctime(os.path.getctime(html_post_file))
+    toc_files_time_updated[title] = time.ctime(os.path.getmtime(html_post_file))
 
     # copy the post's content (everything but the headers and footers generated by MarkdownPad)
     post_body = ''
+    date = ''
     flag = 0
-    file_html_post = open(html_post, 'r')
+    file_html_post = open(html_post_file, 'r')
     for line in file_html_post:
         if (line == '</body>\n'):
             flag = 0
@@ -39,22 +51,22 @@ for infile in glob.glob(os.path.join(path, '*.html')):
             flag = 1
     
     # build a new file for the post
-    html_post = open('./published/' + filename, 'w')
-    html_post.write(header)
-    html_post.write(post_body)
-    html_post.write(footer)
-    html_post.close()
-
+    html_post_file = open('./published/' + filename, 'w')
+    html_post_file.write(header)
+    html_post_file.write(post_body)
+    html_post_file.write(footer)
+    html_post_file.close()
+    
 # build a table of contents file (/thoughts/index.html)
 os.remove('./index.html')
 toc_file = open('./index.html', 'w')
 toc_file.write(header)
 toc_body = '<h2>Posts</h2>'
 
-for t in toc_titles:
-    toc_body += '<a href="./published/'+ toc_titles[t] +'" title="'+ t +'">'+ t +'</a></br>'
-    #print t + ': ' +toc_titles[t]
 
+for t in toc_titles:
+    toc_body += '<a href="./published/'+ toc_titles[t] +'" title="'+ toc_titles[t] +'">'+ toc_titles[t] +' - '+ toc_files_time_created[t] +'</a></br>'
+    print 'Publishing: ' + toc_titles[t]
 toc_file.write(toc_body)
 toc_file.write(footer)
 toc_file.close
