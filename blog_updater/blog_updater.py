@@ -31,9 +31,8 @@ for infile in files:
         else:
             title = title + ' ' + w
         ct += 1
-    toc_titles[title] = filename
-    #print toc_titles[title]
-    
+
+    toc_titles[title] = filename    
     toc_files_time_created[title] = time.ctime(os.path.getctime(html_post_file))
     toc_files_time_updated[title] = time.ctime(os.path.getmtime(html_post_file))
 
