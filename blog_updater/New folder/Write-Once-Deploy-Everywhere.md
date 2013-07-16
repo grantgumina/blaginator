@@ -1,0 +1,18 @@
+[Write Once. Deploy Everywhere.]
+**Posted Fri, 15 Mar 2013 02:35:00**
+
+Due to a major feeling of exhaustion and a severe lack of funds, I decided not to join my fellow classmates on their escapades and adventures to Panama City Beach and instead stayed home. So to make things interesting, I decided I’d take Microsoft up on their [Keep The Cash](http://build.windowsstore.com/keepthecash#fbid=vB1X-a08UcG) program and at least reduce my cashflow problem.
+
+Originally, I was going to attempt to build an app a day, but I wasn’t well versed in the new Windows 8/Windows Phone 8 ecosystem to do that. Instead I made three apps in about five days. Not too shabby.
+
+What was amazing however, was my experience porting my Windows 8 app Resistur to Windows Phone 8 ([link to final product here](http://www.windowsphone.com/en-us/search?q=resistur)). For the Windows 8 version, I built a custom XAML control using Expression Blend, and made it be able to dynamically link to another UI element with Microsoft’s databinding API. In the Windows 8 version’s case, the custom control was bound to a textbox in a two-way fashion. So when the textbox was updated, the control would also update and vice versa.
+
+When I first started to write the Windows Phone 8 version of Resistur, I tried not to think about rewriting the custom control used in the Windows 8 version. Oh how I remembered the hours I spent dealing with graphical glitches, responsiveness issues, and all the other intricate issues that come with custom XAML controls. To my surprise, however, I found that the custom control I wrote for Windows 8 could be ported over to Windows Phone 8 with minimal changes to the code base.
+
+In fact, I think I spent a total of half an hour porting over the code (with the exception of the two hours it took me to figure out a namespace issue I was having - turns out the XAML standards for Win8 and WP8 aren’t very very very similar, but not the same)…
+
+This experience got me thinking about something I’ve been saying for a while now, and something that I think the entire tech industry is getting ready to happen; the ability to write one executable, and have it deployed across a myriad of devices and screen sizes. In other words, the ability to “write once, deploy everywhere".
+
+As a developer, I think the platform that offers this ability would be very attractive to me. Even if it didn’t have a lot of marketshare *cough* Windows 8/WP8 *cough*, the ability to spend the time building an app and having it available to multiple platforms/users would be enormous. In Microsoft’s case, it might even compensate for the relatively small marketshare Win8 and WP8 currently has.
+
+But the real way to sweeten the deal? Somehow, magically, get the Xbox to share some of the Windows codebase. Write once, deploy to PC, phone, and livingroom. That’s a totally immersive experience, and one that no one has gotten right yet.

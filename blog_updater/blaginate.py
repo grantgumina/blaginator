@@ -16,11 +16,10 @@ def create_new_file_path(orig_file_path):
     new_name = new_name.split(".")
     new_name = new_name[0]
     new_name += '.html'
-    new_path = os.path.dirname(orig_file_path) + '\\' + new_name
+    new_path = os.path.dirname(orig_file_path) + '/' + new_name
     return new_path
 
 def get_title_and_filename(file):
-    print file
     # get the title of the doc (based off the url)
     new_name = os.path.basename(file)
     new_name = new_name.split(".")
@@ -83,8 +82,8 @@ if (opts.c):
 # if we're reading a directory, iterate through all .md files in sorder created
 if (os.path.isdir(sys.argv[1])):
     md_dir_path = sys.argv[1]
-    files = glob.glob(os.path.join(md_dir_path, '*.md'))
-    files.sort(key=lambda x: os.path.getmtime(x))
+    files = glob.iglob(os.path.join(md_dir_path, '*.md'))
+    #files.sort(key=lambda x: os.path.getmtime(x))
     for file in files:
         # get the title of the doc (based off the url)
         tf = get_title_and_filename(file)
@@ -94,7 +93,7 @@ if (os.path.isdir(sys.argv[1])):
         # did user specify a new file/directory?
         if (opts.n):
             t_new_name = new_name + '.html'
-            new_path = opts.n + '\\' + t_new_name
+            new_path = opts.n + '/' + t_new_name
         else:
             new_path = create_new_file_path(file)
 
@@ -105,7 +104,7 @@ if (os.path.isdir(sys.argv[1])):
         
         # add file to the dictionaries (used for building table of contents)
         toc_docs[title] = new_path
-
+        
         md_file.close()
 else:
     new_path = ""
