@@ -3,7 +3,7 @@
 
 Last week I had an epic fail. No really - it was a very, *very* epic fail. The startup my good friend and co-founder [Luke Walsh](http://lukewal.sh) and I have been working on, [Outfitly](http://outfitly.com) launched. Within hours, the response was overwhelmingly negative and besides that - we were hacked. As I said, it was a big epic fail.
 
-In retrospect, the epic fail really could've been prevented. In fact, just about everything that contributed to the fail's epicness was an issue Luke and I knew many startups suffer from (mostly from reading [Hacker News](http://news.ycombinator.com)), but we simply didn't have the life experiences necessary to see those issues manifest themselves in our own product. Here's where we screwed up:
+In retrospect, the epic fail really could've been prevented. In fact, just about everything that contributed to the fail's epicness was an issue Luke and I knew many startups suffer from (mostly from reading [Hacker News](http://news.ycombinator.com)), but we simply didn't have the life experiences necessary to see those issues manifest themselves in our own product. Here's where we screwed up: 
 
 ###Homepage Fail###
 This is probably one of the more embarrassing fails of our launch. Simply put, our homepage sucked. It consisted of a logo, a signup (and separate login) form, and a beta "sticker" in the top right corner. There was no information about Outfitly, what it did, how to use it, or anything other than what I mentioned above. For me, someone who takes pride in my design and UX work, this was incredibly embarrassing when the blinders were pulled off and I realized what I had created.

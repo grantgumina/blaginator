@@ -51,8 +51,6 @@ header = ""
 footer = ""
 body = ""
 toc_docs = OrderedDict()  # toc_doc[title] = path_to_doc_on_server
-toc_files_time_created = OrderedDict() # toc_files_time_created[title] = datetime
-toc_files_time_updated = OrderedDict() # toc_files_time_updated[title] = datetime
 
 if (len(sys.argv) < 2):
     parser.print_help()
@@ -82,8 +80,8 @@ if (opts.c):
 # if we're reading a directory, iterate through all .md files in sorder created
 if (os.path.isdir(sys.argv[1])):
     md_dir_path = sys.argv[1]
-    files = glob.iglob(os.path.join(md_dir_path, '*.md'))
-    #files.sort(key=lambda x: os.path.getmtime(x))
+    files = glob.glob(os.path.join(md_dir_path, '*.md'))
+
     for file in files:
         # get the title of the doc (based off the url)
         tf = get_title_and_filename(file)
