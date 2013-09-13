@@ -38,7 +38,7 @@ def get_title_and_filename(file):
     return [title, new_name]
 
 
-msg = "usage: %prog [options] <markdown file/dir>"
+msg = "usage: %prog <markdown file/dir>  [options]"
 parser = optparse.OptionParser(usage=msg)
 parser.add_option("-n", metavar="NEW FILE/DIR", help="path for the converted html file or a directory for all converted files [optional]")
 parser.add_option("-t", metavar="TOC", help="path for the table of contents html file [optional]")
